@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LogiCards — Jogo</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body class="game-page">
+
+    <!-- Verificação rápida: redireciona para index se não estiver autenticado -->
+    <script>
+        if (sessionStorage.getItem('authenticated') !== 'true') {
+            window.location.href = 'index.html';
+        }
+    </script>
+
+    <!-- Cabeçalho: logo do jogo, avatar do jogador, placar -->
+    <header class="game-header">
+        <img src="assets/images/nameGame.png" class="game-logo-small" alt="LogiCards" />
+        <div class="game-header-right">
+            <!-- elemento do avatar clicável (preenchido por JS) -->
+            <div id="perfil-game" class="perfil-game" title="Perfil do jogador"></div>
+            <!-- placar visível no header (atualizado pelo JS) -->
+            <div id="header-score" class="header-score" aria-live="polite">Pontos: 0</div>
+            <!-- O botão de logout foi movido para fora daqui -->
+        </div>
+    </header>
+
+    <!-- Área principal: local onde o módulo do jogo monta a interface -->
+    <main id="game-root" class="game-root" aria-live="polite"></main>
+
+    <!-- Tooltip do perfil: mostra usuário, categoria e pontuação ao clicar no avatar -->
+    <div id="perfil-tooltip" class="perfil-tooltip" style="display:none;">
+        <strong id="tt-usuario">Usuário</strong>
+        <div id="tt-categoria">Categoria: -</div>
+        <div id="tt-pontuacao">Pontuação: 0</div>
+    </div>
+
+    <!-- Inclusão de scripts na ordem necessária: perguntas -> rank -> lógica do jogo -->
+    <script src="perguntas.js"></script>
+    <script src="rank.js"></script>
+    <script src="game.js"></script>
+
+    <!-- Modal de dificuldade: guia o jogador a escolher nível antes de começar -->
+    <div id="difficulty-modal" class="difficulty-modal" style="display:none;">
+        <div class="difficulty-card" role="dialog" aria-modal="true" aria-labelledby="diff-title">
+            <h3 id="diff-title">Escolha a dificuldade</h3>
+            <p>Selecione um nível e pressione <strong>Jogar</strong> para iniciar.</p>
+
+            <!-- Opções de níveis (Fácil / Médio / Difícil) -->
+            <div class="level-options" role="radiogroup" aria-label="Níveis">
+                <div class="level-option selected" data-level="facil" role="radio" aria-checked="true">Fácil</div>
+                <div class="level-option" data-level="medio" role="radio" aria-checked="false">Médio</div>
+                <div class="level-option" data-level="dificil" role="radio" aria-checked="false">Difícil</div>
+            </div>
+
+            <!-- Ações do modal: Sair (volta ao index), Mundo (abre ranking), Jogar (inicia jogo) -->
+            <div class="modal-actions" style="margin-top:16px;">
+                <div class="left">
+                    <button id="diff-exit" class="modal-btn">Sair</button>
+                </div>
+                <div class="center">
+                    <button id="diff-world" class="modal-btn">Mundo</button>
+                </div>
+                <div class="right">
+                    <button id="diff-play" class="modal-btn primary">Jogar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de resultado: mostra pontuação, acertos e erros ao final da sessão -->
+    <div id="result-modal" class="result-modal" style="display:none;">
+        <div class="result-card" role="dialog" aria-modal="true" aria-labelledby="result-title">
+            <h3 id="result-title">Resultado</h3>
+            <div class="result-summary">
+                <!-- resumo do resultado: pontuação grande -->
+                <div id="result-score" class="result-score">Pontos: 0</div>
+                <!-- contadores de acertos e erros -->
+                <div class="result-counts">
+                    <div class="item">
+                        <div style="font-weight:900; font-size:1.2rem;" id="result-correct">0</div>
+                        <div style="opacity:0.8; font-size:0.92rem;">Acertos</div>
+                    </div>
+                    <div class="item">
+                        <div style="font-weight:900; font-size:1.2rem;" id="result-wrong">0</div>
+                        <div style="opacity:0.8; font-size:0.92rem;">Erros</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height:10px;"></div>
+
+            <!-- Ações do modal de resultado: Mundo (abre ranking) e Finalizar (volta ao modal de dificuldade) -->
+            <div class="modal-actions">
+                <div class="left">
+                    <button id="result-world" class="modal-btn">Mundo</button>
+                </div>
+                <div class="center">
+                    <!-- placeholder intencional (pode conter outros botões futuramente) -->
+                </div>
+                <div class="right">
+                    <button id="result-finish" class="modal-btn primary">Finalizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão de logout que encerra a sessão - MOVIDO PARA O FINAL DO BODY -->
+    <button id="logout-btn" class="btn-logout">Sair</button>
+
+</body>
+</html>

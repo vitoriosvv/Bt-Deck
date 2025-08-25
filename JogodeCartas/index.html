@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LogiCards - Início</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- Vídeo de fundo animado -->
+    <video autoplay muted loop id="bg-video">
+        <source src="assets/videos/fundoAnimado.mp4" type="video/mp4" />
+        Seu navegador não suporta vídeo em background.
+    </video>
+
+    <!-- Camada escura por cima do vídeo -->
+    <div class="bg-layer"></div>
+
+    <!-- Canvas para efeitos visuais -->
+    <canvas id="bh-canvas"></canvas>
+
+    <!-- Nome estilizado do jogo -->
+    <img src="assets/images/nameGame.png" alt="Nome do jogo - Logicards" class="game-logo" loading="lazy">
+
+    <!-- Container principal da tela inicial -->
+    <div class="app">
+        
+        <!-- Perfil do jogador (ícone clicável e tooltip) - Inicialmente escondido -->
+        <div id="perfil-jogador-container" style="display: none;">
+            <!-- O seu elemento .perfil original, agora com ID para ser clicável -->
+            <div id="icone-perfil-clicavel" class="perfil">
+                <!-- A imagem do avatar será definida via JS no background-image -->
+            </div>
+            <!-- Aba de Informações do Perfil - Inicialmente invisível -->
+            <div id="perfil-info-tooltip" class="perfil-tooltip" style="display:none;">
+                <strong id="tt-usuario">Usuário</strong>
+                <div id="tt-categoria">Categoria: -</div>
+                <div id="tt-pontuacao">Pontuação: 0</div>
+            </div>
+        </div>
+
+        <!-- Logo menor do jogo -->
+        <img src="assets/images/logoTipo.png" alt="Logo do Logicards" class="logo" loading="lazy">
+
+        <!-- Botões principais da tela inicial -->
+        <div class="botoes">
+            <button id="mundo">Mundo</button>
+            <button id="jogar">Login</button>
+            <button id="cadastro">Cadastro</button>
+            <button id="limpar-cadastro" class="small-cta">Limpar</button>
+        </div>
+    </div>
+
+    <!-- Modal de LOGIN -->
+    <div id="login-modal" class="modal-login" style="display: none;">
+        <div class="modal-content">
+            <h2>Login</h2>
+            <label for="usuario">Usuário:</label>
+            <input type="text" id="usuario" placeholder="Digite seu usuário..." />
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" placeholder="Digite sua senha..." />
+            <div id="login-msg" class="modal-msg"></div>
+            <div class="modal-botoes">
+                <button id="voltar-login">Voltar</button>
+                <button id="jogar-login">Jogar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de CADASTRO -->
+    <div id="cadastro-modal" class="modal-login" style="display: none;">
+        <div class="modal-content">
+            <h2>Cadastro</h2>
+            <label for="cadastro-usuario">Usuário:</label>
+            <input type="text" id="cadastro-usuario" placeholder="Digite seu usuário..." />
+            <label for="cadastro-senha">Senha:</label>
+            <input type="password" id="cadastro-senha" placeholder="Digite sua senha..." />
+            
+            <!-- Escolha de avatar -->
+            <p style="margin-top: 12px;">Escolha sua foto de perfil:</p>
+            <div class="fotos-perfil">
+                <img src="assets/images/1.png" class="foto-perfil" data-foto="1.png" alt="avatar 1">
+                <img src="assets/images/2.png" class="foto-perfil" data-foto="2.png" alt="avatar 2">
+                <img src="assets/images/3.png" class="foto-perfil" data-foto="3.png" alt="avatar 3">
+                <img src="assets/images/4.png" class="foto-perfil" data-foto="4.png" alt="avatar 4">
+                <img src="assets/images/6.png" class="foto-perfil" data-foto="6.png" alt="avatar 6">
+                <img src="assets/images/7.png" class="foto-perfil" data-foto="7.png" alt="avatar 7">
+                <img src="assets/images/5.png" class="foto-perfil" data-foto="8.png" alt="avatar 8">
+            </div>
+
+            <div id="cad-msg" class="modal-msg"></div>
+            <div class="modal-botoes">
+                <button id="voltar-cadastro">Voltar</button>
+                <button id="salvar-cadastro">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast: mensagens rápidas no centro da tela -->
+    <div id="toast" class="toast" aria-live="polite" style="display:none;"></div>
+
+    <!-- Modal de confirmação (usado para limpar cadastro) -->
+    <div id="confirm-modal" class="confirm-modal" style="display:none;">
+        <div class="confirm-content">
+            <p id="confirm-msg">Mensagem</p>
+            <div class="confirm-actions">
+                <button id="confirm-cancel" class="btn-cancel">Cancelar</button>
+                <button id="confirm-ok" class="btn-ok">Sim</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts principais -->
+    <script src="rank.js"></script> <!-- Gerencia ranking -->
+    <script src="script.js" defer></script> <!-- Lógica de login, cadastro e UI -->
+
+</body>
+</html>
